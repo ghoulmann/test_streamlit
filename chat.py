@@ -4,8 +4,6 @@ from streamlit_chat import message
 from database import get_redis_connection
 from chatbot import RetrievalAssistant, Message
 
-
-
 # Initialise database
 
 ## Initialise Redis connection
@@ -14,7 +12,24 @@ redis_client = get_redis_connection()
 # Set instruction
 
 # System prompt requiring Question and Year to be extracted from the user
-system_prompt = ""
+system_prompt = '''
+You are a helpful Formula 1 knowledge base assistant. You need to capture a Question and Year from each customer.
+The Question is their query on Formula 1, and the Year is the year of the applicable Formula 1 season.
+Think about this step by step:
+- The user will ask a Question
+- You will ask them for the Year if their question didn't include a Year
+- Once you have the Year, say "searching for answers".
+
+Example:
+
+User: I'd like to know the cost cap for a power unit
+
+Assistant: Certainly, what year would you like this for?
+
+User: 2023 please.
+
+Assistant: Searching for answers.
+'''
 
 ### CHATBOT APP
 
